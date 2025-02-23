@@ -95,9 +95,9 @@ sound = AudioSegment.from_wav(file_name)
 
 chunks = split_on_silence(
     sound,
-    min_silence_len=500,  # Minimum length of silence in milliseconds
-    silence_thresh=-40,  # Consider sound quieter than -40dBFS as silence
-    keep_silence=250, # Keep some silence in the begining and end of the chunks.
+    min_silence_len=300,  # Minimum length of silence in milliseconds
+    silence_thresh=-30,  # Consider sound quieter than -40dBFS as silence
+    keep_silence=150, # Keep some silence in the begining and end of the chunks.
 )
 
 

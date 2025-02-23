@@ -17,18 +17,22 @@ folder_path = "output"
 try:
     files = os.listdir(folder_path)
     files.sort()
-    for file in files:
-        print(file)
-        r = sr.Recognizer()
-        with sr.AudioFile(folder_path+"/"+file) as source:
-            audio_data = r.record(source)
-        try:
-            text = r.recognize_google(audio_data, language="it-IT")
-            print("Transcript:", text)
-        except sr.UnknownValueError:
-            print("Impossibile recognize audio")
-        except sr.RequestError as e:
-            print("Request error:", e)
+    with open("transcription.txt", "wt") as myfile:
+        
+        for file in files:
+            print(file)
+            r = sr.Recognizer()
+            with sr.AudioFile(folder_path+"/"+file) as source:
+                audio_data = r.record(source)
+            try:
+                text = r.recognize_google(audio_data, language="it-IT")
+                print("Transcript:", text)
+                myfile.write(text+"\n")
+                myfile.flush()
+            except sr.UnknownValueError:
+                print("Impossible recognize audio")
+            except sr.RequestError as e:
+                print("Request error:", e)
 except FileNotFoundError:
     print(f"Folder not found: ")
 except NotADirectoryError:

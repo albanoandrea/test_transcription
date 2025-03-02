@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #%%
 import sys
-import os
+import json
 
 #%%
 from pyannote.audio import Pipeline
@@ -30,6 +30,14 @@ file_name = sys.argv[1]
 # apply pretrained pipeline
 diarization = pipeline(file_name)
 
+#%%
+annotate = []
 # print the result
+index = 0
 for turn, _, speaker in diarization.itertracks(yield_label=True):
-    print(f"start={turn.start:.1f}s stop={turn.end:.1f}s speaker_{speaker}")
+        annotate.append({'index':index, 'speaker': speaker, 'start': turn.start, 'end': turn.end})
+        index = index+1
+
+with open(file_name+'.annotate.json', 'w') as f:
+    json.dump(annotate, f)
+            

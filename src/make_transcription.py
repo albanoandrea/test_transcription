@@ -12,13 +12,12 @@ if len(sys.argv) != 2:
 folder_path = sys.argv[1]
 
 #%%
-folder_path = "output"
+# folder_path = "output"
 #%%
 try:
     files = os.listdir(folder_path)
     files.sort()
-    with open("transcription.txt", "wt") as myfile:
-        
+    with open(folder_path + "/transcription.txt", "wt") as myfile:
         for file in files:
             print(file)
             r = sr.Recognizer()
@@ -26,8 +25,8 @@ try:
                 audio_data = r.record(source)
             try:
                 text = r.recognize_google(audio_data, language="it-IT")
-                print("Transcript:", text)
-                myfile.write(text+"\n")
+                print(file[-6:-4] + ": " + text)
+                myfile.write(file[-6:-4] + ": " + text+"\n")
                 myfile.flush()
             except sr.UnknownValueError:
                 print("Impossible recognize audio")

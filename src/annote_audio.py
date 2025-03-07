@@ -4,6 +4,14 @@ import sys
 import json
 
 #%%
+if len(sys.argv) != 2:
+   print("Usage: " + sys.argv[0] + " <audio file>")
+   exit(-1)
+file_name = sys.argv[1]
+# #%%
+# file_name = "250221-lazanzara.wav"
+
+#%%
 from pyannote.audio import Pipeline
 with open("token.txt", "r") as f:
     token = f.read()
@@ -18,13 +26,6 @@ from torch import cuda
 device = 'cuda' if cuda.is_available() else 'cpu'
 pipeline.to(torch.device(device))
 
-#%%
-if len(sys.argv) != 2:
-   print("Usage: " + sys.argv[0] + " <audio file>")
-   exit(-1)
-file_name = sys.argv[1]
-# #%%
-# file_name = "250221-lazanzara.wav"
 
 #%%
 # apply pretrained pipeline
